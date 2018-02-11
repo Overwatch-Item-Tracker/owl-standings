@@ -36,7 +36,7 @@ app.controller('MainCtrl', ['$http', '$scope', function($http, $scope) {
   }
 
   vm.gC = what => {
-    if (vm.tableSort === what) {
+    if (vm.activeSort === what) {
       return `sort-amount-${vm.tableReverse ? 'desc' : 'asc'}`
     }
     return 'sort'
