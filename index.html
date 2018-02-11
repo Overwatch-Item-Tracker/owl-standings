@@ -29,12 +29,21 @@
       margin-left: -10px;
     }
 
-    .table .second_header td {
+    .table .second_header td:not(.divider_col) {
       font-weight: bold;
     }
 
+    .table .second_header div {
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .table .second_header td {
+      padding: .75rem 6px;
+    }
+
     .table .second_header td .fa {
-      float: right;
+      margin-left: 4px;
       margin-top: 4px;
       width: 16px;
     }
@@ -43,9 +52,26 @@
       text-align: center;
     }
 
+    .table td.team {
+      text-align: left;
+    }
+
+    .table td.team img {
+      height: 24px;
+      width: 24px;
+      float: left;
+      margin-right: 8px;
+    }
+
     @media (min-width: 992px) {
       .container-fluid {
         max-width: 1140px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .table .second_header td {
+        font-size: 14px;
       }
     }
 
@@ -119,21 +145,22 @@
       </thead>
       <tbody>
         <tr class="second_header">
-          <td>Team <span ng-click="$vm.setSort('name')" class="fa fa-{{$vm.getClass('name')}}"></span></td>
-          <td>Wins <span ng-click="$vm.setSort('match_wins')" class="fa fa-{{$vm.getClass('match_wins')}}"></span></td>
-          <td>Losses <span ng-click="$vm.setSort('match_losses')" class="fa fa-{{$vm.getClass('match_losses')}}"></span></td>
-          <td>Win % <span ng-click="$vm.setSort('match_win_percent')" class="fa fa-{{$vm.getClass('match_win_percent')}}"></span></td>
+          <td><div ng-click="$vm.sS('name')">Team <span class="fa fa-{{$vm.gC('name')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('match_wins')">Wins <span class="fa fa-{{$vm.gC('match_wins')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('match_losses')">Losses <span class="fa fa-{{$vm.gC('match_losses')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('match_win_percent')">Win % <span class="fa fa-{{$vm.gC('match_win_percent')}}"></span></div></td>
           <td class="divider_col"></td>
-          <td>Wins <span ng-click="$vm.setSort('map_wins')" class="fa fa-{{$vm.getClass('map_wins')}}"></span></td>
-          <td>Losses <span ng-click="$vm.setSort('map_losses')" class="fa fa-{{$vm.getClass('map_losses')}}"></span></td>
-          <td>Ties <span ng-click="$vm.setSort('map_ties')" class="fa fa-{{$vm.getClass('map_ties')}}"></span></td>
-          <td>Win % <span ng-click="$vm.setSort('map_win_percent')" class="fa fa-{{$vm.getClass('map_win_percent')}}"></span></td>
-          <td>Map +- <span ng-click="$vm.setSort('map_differential')" class="fa fa-{{$vm.getClass('map_differential')}}"></span></td>
+          <td><div ng-click="$vm.sS('map_wins')">Wins <span class="fa fa-{{$vm.gC('map_wins')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('map_losses')">Losses <span class="fa fa-{{$vm.gC('map_losses')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('map_ties')">Ties <span class="fa fa-{{$vm.gC('map_ties')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('map_win_percent')">Win % <span class="fa fa-{{$vm.gC('map_win_percent')}}"></span></div></td>
+          <td><div ng-click="$vm.sS('map_differential')">Map +- <span class="fa fa-{{$vm.gC('map_differential')}}"></span></div></td>
         </tr>
         <tr ng-repeat="row in $vm.data | orderBy:$vm.tableSort:$vm.tableReverse">
-          <td>
-            <span class="d-none d-lg-block">{{row.name}}</span>
-            <span class="d-block d-lg-none">{{row.abbreviated_name}}</span>
+          <td class="team">
+            <img class="d-none d-lg-block" ng-src="{{row.img}}">
+            <strong class="d-none d-lg-block">{{row.name}}</strong>
+            <strong class="d-block d-lg-none">{{row.abbreviated_name}}</strong>
           </td>
           <td>{{row.match_wins}}</td>
           <td>{{row.match_losses}}</td>
@@ -143,7 +170,7 @@
           <td>{{row.map_losses}}</td>
           <td>{{row.map_ties}}</td>
           <td>{{row.map_win_percent.toFixed(2)}}%</td>
-          <td class="map_diff">{{row.map_differential}}</td>
+          <td class="map_diff">{{row.map_differential | differentialFilter}}</td>
         </tr>
       </tbody>
     </table>
