@@ -53,6 +53,8 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
     } else {
       $location.search('tab', tab)
     }
+
+    vm.tableSort = getOrderOptions()
   }
 
   const sortOptions = {
