@@ -114,7 +114,7 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
     try {
       const data = await $http.get('https://api.overwatchleague.com/v2/standings?locale=en_US', {
         headers: {
-          // 'Cache-Control': 'no-cache'
+          'Cache-Control': 'no-cache'
         }
       }).then(res => res.data.data)
 
