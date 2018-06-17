@@ -54,11 +54,21 @@
 
     .table td.team {
       text-align: left;
+      position: relative;
+    }
+
+    .table td.team .color-bar {
+      height: 100%;
+      width: 4px;
+      position: absolute;
+      left: 0;
+      top: 0;
     }
 
     .table td.team img {
-      height: 24px;
-      width: 24px;
+      height: 26px;
+      width: 26px;
+      object-fit: contain;
       float: left;
       margin-right: 8px;
     }
@@ -132,7 +142,13 @@
     </nav>
   </div>
 
-  <div class="container-fluid mt-4">
+  <div class="container-fluid mt-3">
+    <div class="nav nav-pills justify-content-center">
+      <a class="nav-link" href="#" ng-repeat="tab in $vm.tabs" ng-click="$vm.setTab(tab.id)" ng-class="{ active: $vm.sT == tab.id}">{{tab.name}}</a>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-3">
     <div class="alert alert-info" ng-show="$vm.loading">Loading Data</div>
     <div class="alert alert-danger" ng-show="$vm.error">Error loading data! Refresh to try again</div>
     <table ng-if="$vm.data" class="table table-striped table-hover table-bordered">
@@ -158,19 +174,20 @@
         </tr>
         <tr ng-repeat="row in $vm.data | orderBy:$vm.tableSort:$vm.tableReverse">
           <td class="team">
+            <div class="color-bar" style="background-color: {{row.color}}"></div>
             <img class="d-none d-lg-block" ng-src="{{row.img}}">
             <strong class="d-none d-lg-block">{{row.name}}</strong>
             <strong class="d-block d-lg-none">{{row.abbreviated_name}}</strong>
           </td>
-          <td>{{row.match_wins}}</td>
-          <td>{{row.match_losses}}</td>
-          <td>{{row.match_win_percent.toFixed(2)}}%</td>
+          <td>{{row.scores[$vm.sT].match_wins}}</td>
+          <td>{{row.scores[$vm.sT].match_losses}}</td>
+          <td>{{row.scores[$vm.sT].match_win_percent.toFixed(2)}}%</td>
           <td class="divider_col"></td>
-          <td>{{row.map_wins}}</td>
-          <td>{{row.map_losses}}</td>
-          <td>{{row.map_ties}}</td>
-          <td>{{row.map_win_percent.toFixed(2)}}%</td>
-          <td class="map_diff">{{row.map_differential | differentialFilter}}</td>
+          <td>{{row.scores[$vm.sT].map_wins}}</td>
+          <td>{{row.scores[$vm.sT].map_losses}}</td>
+          <td>{{row.scores[$vm.sT].map_ties}}</td>
+          <td>{{row.scores[$vm.sT].map_win_percent.toFixed(2)}}%</td>
+          <td class="map_diff">{{row.scores[$vm.sT].map_differential | differentialFilter}}</td>
         </tr>
       </tbody>
     </table>
