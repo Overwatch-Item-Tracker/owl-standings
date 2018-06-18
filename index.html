@@ -172,7 +172,7 @@
           <td><div ng-click="$vm.sS('map_win_percent')">Win % <span class="fa fa-{{$vm.gC('map_win_percent')}}"></span></div></td>
           <td><div ng-click="$vm.sS('map_differential')">Map +- <span class="fa fa-{{$vm.gC('map_differential')}}"></span></div></td>
         </tr>
-        <tr ng-repeat="row in $vm.data | orderBy:$vm.tableSort:$vm.tableReverse">
+        <tr ng-repeat="row in $vm.data | orderBy:$vm.tableSort:$vm.tableReverse" ng-class="{'table-success': row.scores[$vm.sT].isStageWinner}">
           <td class="team">
             <div class="color-bar" style="background-color: {{row.color}}"></div>
             <img class="d-none d-lg-block" ng-src="{{row.img}}">

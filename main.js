@@ -101,6 +101,7 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
 
   function mapScores(record) {
     return {
+      isStageWinner: record.isPlayoffWinner,
       match_wins: record.matchWin,
       match_losses: record.matchLoss,
       match_win_percent: record.matchWin / (record.matchLoss + record.matchWin) * 100,
@@ -130,6 +131,8 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
           ...Object.keys(team.stages).reduce((res, stage) => ({ ...res, [stage]: mapScores(team.stages[stage]) }), {})
         }
       }))
+
+      console.log(vm.data)
     } catch (e) {
       console.error('Error loading owl data', e)
       vm.error = true
