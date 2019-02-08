@@ -125,15 +125,18 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
   }
 
   function mapScores(record) {
+    const matchWinPercent = record.matchWin / (record.matchLoss + record.matchWin) * 100
+    const mapWinPercent = record.gameWin / (record.gameLoss + record.gameWin + record.gameTie) * 100
+
     return {
       isStageWinner: record.isPlayoffWinner,
       match_wins: record.matchWin,
       match_losses: record.matchLoss,
-      match_win_percent: record.matchWin / (record.matchLoss + record.matchWin) * 100,
+      match_win_percent: !isNaN(matchWinPercent) ? matchWinPercent : null,
       map_wins: record.gameWin,
       map_losses: record.gameLoss,
       map_ties: record.gameTie,
-      map_win_percent: record.gameWin / (record.gameLoss + record.gameWin + record.gameTie) * 100,
+      map_win_percent: !isNaN(mapWinPercent) ? mapWinPercent : null,
       map_differential: record.gameWin - record.gameLoss
     }
   }

@@ -62,8 +62,8 @@
     }
 
     .table td.team .color-bar {
-      height: 100%;
-      width: 4px;
+      height: 101%;
+      width: 5px;
       position: absolute;
       left: 0;
       top: 0;
@@ -216,12 +216,14 @@
           </td>
           <td>{{row.scores[$vm.sT].match_wins}}</td>
           <td>{{row.scores[$vm.sT].match_losses}}</td>
-          <td>{{row.scores[$vm.sT].match_win_percent.toFixed(2)}}%</td>
+          <td ng-show="row.scores[$vm.sT].match_win_percent !== null">{{row.scores[$vm.sT].match_win_percent.toFixed(2)}}%</td>
+          <td ng-show="row.scores[$vm.sT].match_win_percent === null">N/A</td>
           <td class="divider_col"></td>
           <td>{{row.scores[$vm.sT].map_wins}}</td>
           <td>{{row.scores[$vm.sT].map_losses}}</td>
           <td>{{row.scores[$vm.sT].map_ties}}</td>
-          <td>{{row.scores[$vm.sT].map_win_percent.toFixed(2)}}%</td>
+          <td ng-show="row.scores[$vm.sT].map_win_percent !== null">{{row.scores[$vm.sT].map_win_percent.toFixed(2)}}%</td>
+          <td ng-show="row.scores[$vm.sT].map_win_percent === null">N/A</td>
           <td class="map_diff">{{row.scores[$vm.sT].map_differential | differentialFilter}}</td>
         </tr>
       </tbody>
