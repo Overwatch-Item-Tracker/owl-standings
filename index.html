@@ -11,6 +11,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.min.js" integrity="sha256-7ngBGhPctUEyXLD6ha53TFUaqhBCnXFOi712aqBq094=" crossorigin="anonymous"></script>
   <script src="./main.js"></script>
   <style>
+    .header {
+      padding: 0;
+    }
+
     .logo {
       padding-top: 10px;
     }
@@ -94,6 +98,21 @@
       font-weight: bold;
       text-transform: uppercase;
     }
+
+    .nav-container {
+      padding: 10px;
+    }
+
+    .nav-container .nav-title {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .nav-container .form-inline button {
+      margin: 2px;
+    }
   </style>
 </head>
 <body ng-controller="MainCtrl as $vm">
@@ -130,7 +149,7 @@
     </symbol>
   </svg>
 
-  <div class="container-fluid">
+  <div class="container-fluid header">
     <nav class="navbar navbar-light bg-light navbar-expand-lg">
       <div class="logo">
         <svg class="owl-logo"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#logo-owl"></use></svg>
@@ -144,7 +163,23 @@
 
   <div class="container-fluid mt-3">
     <div class="nav nav-pills justify-content-center">
-      <a class="nav-link" href="#" ng-repeat="tab in $vm.tabs" ng-click="$vm.setTab(tab.id)" ng-class="{ active: $vm.sT == tab.id}">{{tab.name}}</a>
+      <div class="nav-container">
+        <div class="nav-title">Stages</div>
+        <div class="form-inline">
+          <button class="btn" ng-repeat="tab in $vm.tabs" ng-click="$vm.setTab(tab.id)" ng-class="{'btn-primary': $vm.sT === tab.id, 'btn-outline-primary': $vm.sT !== tab.id}">
+            {{tab.name}}
+          </button>
+        </div>
+      </div>
+        
+      <div class="nav-container">
+        <div class="nav-title">Years</div>
+        <div class="form-inline">
+          <button class="btn" ng-repeat="year in $vm.years" ng-click="$vm.setYear(year.id)" ng-class="{'btn-primary': $vm.year === year.id, 'btn-outline-primary': $vm.year !== year.id}">
+            {{year.name}}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

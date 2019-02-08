@@ -21,12 +21,21 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
   const vm = this
   vm.loading = true
   vm.error = false
+  vm.year = $location.search().year ? +$location.search().year : 2019
   vm.sT = $location.search().tab || 'league'
   vm.data = null
 
   vm.tableSort
   vm.activeSort = 'match_wins'
   vm.tableReverse = true
+
+  vm.years = [{
+    id: 2018,
+    name: '2018'
+  }, {
+    id: 2019,
+    name: '2019'
+  }]
 
   vm.tabs = [{
     id: 'league',
@@ -55,6 +64,22 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
     }
 
     vm.tableSort = getOrderOptions()
+  }
+
+  vm.setYear = year => {
+    if (vm.year === year && !vm.error) {
+      return
+    }
+
+    vm.year = year
+
+    if (year === 2019) {
+      $location.search('year', null)
+    } else {
+      $location.search('year', year)
+    }
+
+    loadOwlData()
   }
 
   const sortOptions = {
@@ -114,8 +139,11 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
   }
 
   async function loadOwlData() {
+    vm.loading = true
+    vm.data = null
+
     try {
-      const data = await $http.get('https://api.overwatchleague.com/v2/standings?locale=en_US', {
+      const data = await $http.get(`https://api.overwatchleague.com/v2/standings?locale=en_US&season=${vm.year}`, {
         headers: {
           'Cache-Control': 'no-cache'
         }
