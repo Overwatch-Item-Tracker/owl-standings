@@ -83,8 +83,8 @@ app.controller('MainCtrl', ['$http', '$scope', '$location', function($http, $sco
   }
 
   const sortOptions = {
-    match_wins: ['match_wins', 'map_differential', 'map_win_percent'], // Order by wins then differential
-    match_losses: ['match_losses', '-map_differential', '-map_win_percent'] // Order by losses then differential
+    match_wins: ['match_wins', 'map_differential',  '-match_losses', 'map_win_percent'], // Order by wins then differential
+    match_losses: ['match_losses', '-match_wins', '-map_differential', '-map_win_percent'] // Order by losses then differential
   }
 
   // Returns a custom order string that supports multiple order options so angular can do its shit
